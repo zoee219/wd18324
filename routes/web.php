@@ -1,9 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductController;
+//use App\Http\Controllers\ProductController;
 use App\Http\Controllers\LeVanZoeController;
 use App\Http\Controllers\Usercontroller;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\ViewController;
 
 // Method http
@@ -86,3 +87,28 @@ Route::group([
 });
 
 Route::get('test', [UserController::class, 'test']);
+
+Route::get('test', function(){
+    return view('test')->with([
+        'var1' => '1',
+        'var2' => [
+            'Apple', 'Orange', 'Mango'
+        ]
+        ]);
+});
+
+Route::get('test2', function(){
+    return view('admin.products.list-product');
+});
+
+Route::group(['prefix' => 'admin', 'as' => 'admin.'],
+function(){
+    Route::group(['prefix' => 'products', 'as' => 'products.'], function(){
+        Route::get('/', [ProductController::class, 'listProduct'])
+        ->name('listProduct');
+
+        Route::get('add-product', [ProductController::class, 'addProduct'])
+        ->name('addProduct');
+        Route::post('add-product', [ProductController::class, 'addPostProduct'])->name('addPostProduct');
+    });
+});

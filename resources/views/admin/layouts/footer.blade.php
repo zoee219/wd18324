@@ -3,7 +3,3 @@
         @Copyright bootstrap
     </h5>
 </div>
-
-</div>
-</div>
-</div>
